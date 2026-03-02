@@ -1,16 +1,25 @@
 #pragma once
 
-#include "Vec2.h"
-#include <SFML/Graphics.hpp>
+#include "Animation.h"
+#include "Vec2f.h"
+#include "Assets.h"
 
-class CTransform
+class Component
 {
 public:
-	Vec2 pos = { 0.0, 0.0 };
-	Vec2 velocity = { 0.0, 0.0 };
+	bool exists = false;
+};
+
+class CTransform : public Component
+{
+public:
+	Vec2f pos = { 0.0, 0.0 };
+	Vec2f velocity = { 0.0, 0.0 };
+	Vec2f scale = { 1.0, 1.0 };
+	Vec2f velocity = { 0.0, 0.0 };
 	float angle = 0;
 
-	CTransform(const Vec2& p, const Vec2& v, float a)
+	CTransform(const Vec2f& p, const Vec2f& v, float a)
 		:pos(p), velocity(v), angle(a)
 	{
 	};

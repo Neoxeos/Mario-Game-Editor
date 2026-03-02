@@ -40,7 +40,7 @@ public:
 	void spawnPlayer();
 	void spawnEnemy();
 	void spawnSmallEnemies(std::shared_ptr<Entity> e);
-	void spawnBullet(std::shared_ptr<Entity> entity, const Vec2& taget);
+	void spawnBullet(std::shared_ptr<Entity> entity, const Vec2f& taget);
 	void spawnSpecialWeapon(std::shared_ptr<Entity> entity);
 
 	void sMovement();
