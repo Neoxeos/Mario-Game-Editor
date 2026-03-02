@@ -25,9 +25,9 @@ public:
 
 	void loadFromFile(const std::string& path);
 
-	const sf::Texture& getTexture(const std::string& textureName) const;
-	const Animation& getAnimation(const std::string& animationName) const;
-	const sf::Font& getFont(const std::string& fontName) const;
-	const std::map<std::string, sf::Texture>& getTextures() const;
-	const std::map<std::string, Animation>& getAnimations() const;
+	const sf::Texture& getTexture(const std::string& textureName) const {return m_textureMap.at(textureName); }
+	const Animation& getAnimation(const std::string& animationName) const {return m_animationMap.at(animationName); }
+	const sf::Font& getFont(const std::string& fontName) const { return m_fontMap.at(fontName); }
+	const std::map<std::string, sf::Texture>& getTextures() const { return m_textureMap;}
+	const std::map<std::string, Animation>& getAnimations() const { return m_animationMap;}
 };
