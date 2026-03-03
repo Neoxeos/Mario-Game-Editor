@@ -1,4 +1,5 @@
 #pragma once
+#include "Action.h"
 #include "Game.h"
 #include "Scene.h"
 #include "EntityManager.h"
@@ -20,6 +21,7 @@ protected:
 	bool m_drawGrid = false;
 	const Vec2f m_gridSize = { 64, 64 };
 	EntityManager m_entityManager;
+	Game m_game;
 
 	void init(const std::string& levelPath);
 	void loadLevel(const std::string& filename);
@@ -30,6 +32,11 @@ protected:
 	void sMovement();
 	void sLifespan();
 	void sCollision();
+	void doAction(const Action& action);
+	void sGUI();
+	void sRender();
+	void drawLine(const Vec2f& p1, const Vec2f& p2);
+	void sAnimation();
 	void spawnPlayer();
 
 	Scene_Play() = default;

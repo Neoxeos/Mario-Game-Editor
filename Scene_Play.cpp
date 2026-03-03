@@ -41,7 +41,7 @@ void Scene_Play::spawnPlayer()
 	// TODO
 }
 
-void Scene_play::spawnBullet(std::shared_ptr<Entity> entity)
+void Scene_Play::spawnBullet(std::shared_ptr<Entity> entity)
 {
 	//todo
 }
@@ -67,7 +67,38 @@ void Scene_Play::sCollision()
 	// TODO
 }
 
+void Scene_Play::doAction(const Action& action)
+{
+	// TODO
+}
+
+void Scene_Play::sAnimation()
+{
+	// TODO
+}
+
 void Scene_Play::onEnd()
 {
 	// TODO
+}
+
+void Scene_Play::sGUI()
+{
+	// TODO
+}
+
+void Scene_Play::sRender()
+{
+	// TODO
+}
+
+void Scene_Play::drawLine(const Vec2f& p1, const Vec2f& p2)
+{
+	sf::Vertex line[] =
+	{
+		{p1, sf::Color::White},
+		{p2, sf::Color::White}
+	};
+
+	m_game.window().draw(line, 2, sf::Lines);
 }
