@@ -42,12 +42,4 @@ public:
 	void spawnSmallEnemies(std::shared_ptr<Entity> e);
 	void spawnBullet(std::shared_ptr<Entity> entity, const Vec2f& taget);
 	void spawnSpecialWeapon(std::shared_ptr<Entity> entity);
-
-	void sMovement();
-	void sLifespan();
-	void sCollision();
-	void sEnemySpawner();
-	void sGUI();
-	void sRender();
-	void sUserInput();
 };

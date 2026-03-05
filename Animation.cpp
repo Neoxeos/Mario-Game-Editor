@@ -1,5 +1,6 @@
 #include "Animation.h"
 
+
 void Animation::update()
 {
 	m_currentFrame++;
