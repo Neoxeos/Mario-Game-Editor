@@ -20,8 +20,8 @@ protected:
 	bool m_drawCollisions = false;
 	bool m_drawGrid = false;
 	const Vec2f m_gridSize = { 64, 64 };
-	EntityManager m_entityManager;
-	Game m_game;
+	//EntityManager m_entityManager;
+	//Game m_game;
 
 	void init(const std::string& levelPath);
 	void loadLevel(const std::string& filename);

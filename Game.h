@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "EntityManager.h"
+#include "Scene.h"
 
 #include <SFML/Graphics.hpp>
 #include "imgui.h"
@@ -13,13 +14,11 @@ struct BulletConfig { int SR, CR, FR, FG, FB, OR, OG, OB, OT, V, L; float S; };
 
 class Game
 {
+	std::map<std::string, Scene> m_scenes; // map of all scenes
+	std::string m_scene;
+	Assets m_assets;
 	sf::RenderWindow m_window; // the window we will draw to
 	EntityManager m_entities; // vector of all entities 
-	sf::Font m_font; // font used to draw
-	sf::Text m_text; // the score text to be drawn on the screen
-	PlayerConfig m_playerConfig; 
-	EnemyConfig m_enemyConfig;
-	BulletConfig m_bulletConfig;
 	sf::Clock m_deltaClock;
 	int m_score = 0;
 	int m_currentFrame = 0;
@@ -34,9 +33,15 @@ class Game
 public:
 	Game(const std::string& config);
 	void init(const std::string& path);
+	void update();
 	void run();
-	void setPaused(bool paused);
+	void quit();
+	void changeScene(const std::string& scene);
+	sf::Window& getWindow();
+	void sUsetInput();
 
+	// to erase
+	void setPaused(bool paused);
 	void spawnPlayer();
 	void spawnEnemy();
 	void spawnSmallEnemies(std::shared_ptr<Entity> e);

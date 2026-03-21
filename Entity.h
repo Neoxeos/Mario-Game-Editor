@@ -25,7 +25,7 @@ public:
 	std::shared_ptr<CScore> cScore;
 	std::shared_ptr<CLifespan> cLifespan;
 
-	// privcate member access functions
+	// private member access functions
 	bool isActive() const;
 	const std::string& tag() const;
 	const size_t id() const;
