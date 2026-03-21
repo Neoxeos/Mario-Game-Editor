@@ -30,4 +30,9 @@ public:
 		}
 		return Action(name, type);
 	}
+
+	std::string toString() const
+	{
+		return m_name + " " + m_type;
+	}
 };
