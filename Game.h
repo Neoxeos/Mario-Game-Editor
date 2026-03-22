@@ -18,14 +18,10 @@ class Game
 	std::string m_scene;
 	Assets m_assets;
 	sf::RenderWindow m_window; // the window we will draw to
-	EntityManager m_entities; // vector of all entities 
+	EntityManager m_entities; // vector of all entities
+	size_t m_simulationSpeed = 1; // how many times to update the game logic per frame
 	sf::Clock m_deltaClock;
-	int m_score = 0;
-	int m_currentFrame = 0;
 	bool m_running = true;
-	int m_lastEnemySpawnTime = 0;
-	std::shared_ptr<Entity> m_player;
-	int m_enemySpawnInterval = 120; // 2s to spawn enemy by default
 	bool m_paused = false;
 
 
@@ -36,16 +32,10 @@ public:
 	void update();
 	void run();
 	void quit();
-	template<typename T> void changeScene(const std::string& scene, std::string args);
+	template<typename T> void changeScene(const std::string& sceneName, std::shared_ptr<T> scene);
+	std::shared_ptr<Scene> getCurrentScene();
 	Assets& getAssets();
 	sf::Window& getWindow();
-	void sUsetInput();
-
-	// to erase
-	void setPaused(bool paused);
-	void spawnPlayer();
-	void spawnEnemy();
-	void spawnSmallEnemies(std::shared_ptr<Entity> e);
-	void spawnBullet(std::shared_ptr<Entity> entity, const Vec2f& taget);
-	void spawnSpecialWeapon(std::shared_ptr<Entity> entity);
+	void sUserInput();
+	bool isRunning() const;
 };

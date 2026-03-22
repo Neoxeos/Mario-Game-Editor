@@ -1,6 +1,9 @@
 #define _USE_MATH_DEFINES
 
 #include "Game.h"
+#include "Assets.h"
+#include "Scene_Play.h"	
+#include "Scene_Menu.h"
 
 #include <cmath>
 #include <iostream>
@@ -13,87 +16,79 @@ Game::Game(const std::string& config)
 
 void Game::init(const std::string& path)
 {
-	/* initialize random seed: */
-	srand(time(NULL));
+	m_assets.loadFromFile(path);
 
-	// read file
-	std::ifstream fin(path);
+	m_window.create(sf::VideoMode(1280, 768), "Game");
+	m_window.setFramerateLimit(60);
 
-	// reading for window 
-	std::string name;
-	int windowHeight;
-	int windowWidth;
-	int frameSpeed;
-	int fullscreen;
-	fin >> name >> windowHeight >> windowWidth >> frameSpeed >> fullscreen;
-
-	// reading for font
-	std::string fontFilePath;
-	int fontSize;
-	int fontRedColor;
-	int fontGreenColor;
-	int fontBlueColor;
-	fin >> name >> fontFilePath >> fontSize >> fontRedColor >> fontGreenColor >> fontBlueColor;
-
-	// reading for player
-	fin >> name >> m_playerConfig.SR >> m_playerConfig.CR >> m_playerConfig.S >> m_playerConfig.FR >> m_playerConfig.FG >> m_playerConfig.FB >> m_playerConfig.OR >> m_playerConfig.OG >> m_playerConfig.OB >> m_playerConfig.OT >> m_playerConfig.V;
-
-	// reading for enemies
-	fin >> name >> m_enemyConfig.SR >> m_enemyConfig.CR >> m_enemyConfig.SMIN >> m_enemyConfig.SMAX >> m_enemyConfig.OR >> m_enemyConfig.OG >> m_enemyConfig.OB >> m_enemyConfig.OT >> m_enemyConfig.VMIN >> m_enemyConfig.VMAX >> m_enemyConfig.L >> m_enemyConfig.SP;
-	// set up spwn time for enemies
-	m_enemySpawnInterval = m_enemyConfig.SP;
-
-	// reading for bullet 
-	fin >> name >> m_bulletConfig.SR >> m_bulletConfig.CR >> m_bulletConfig.S >> m_bulletConfig.FR >> m_bulletConfig.FG >> m_bulletConfig.FB >> m_bulletConfig.OR >> m_bulletConfig.OG >> m_bulletConfig.OB >> m_bulletConfig.OT >> m_bulletConfig.V >> m_bulletConfig.L;
-	
-	// set up window parameters
-	if (fullscreen)
-	{
-		m_window.create(sf::VideoMode(windowHeight, windowWidth), "Assigment 2", sf::Style::Fullscreen);
-	}
-	else
-	{
-		m_window.create(sf::VideoMode(windowHeight, windowWidth), "Assigment 2");
-	}
-	m_window.setFramerateLimit(frameSpeed);
-
-	// set up font 
-	if (!m_font.loadFromFile(fontFilePath))
-	{
-	    std::cerr << "Could not load font!\n";
-	    exit(-1);
-	}
-	m_text.setFont(m_font);
-	m_text.setCharacterSize(fontSize);
-	m_text.setFillColor(sf::Color(fontRedColor, fontGreenColor, fontRedColor));
-	m_text.setString(std::string("Score: ") + std::to_string(m_score));
-	m_text.setPosition(0, 0);
-
+	changeScene<Scene_Menu>("menu", std::make_shared<Scene_Menu>(this));
 	ImGui::SFML::Init(m_window);
+}
 
-	spawnPlayer();
+std::shared_ptr<Scene> Game::getCurrentScene()
+{
+	return m_scenes.at(m_scene);
+}
+
+bool Game::isRunning() const
+{
+	return m_running & m_window.isOpen();
 }
 
 void Game::run()
 {
-	while (m_running)
+	while (isRunning())
 	{
-		// update entity manager
-		m_entities.update();
+		update();
 
 		// required update call to  imgui
 		ImGui::SFML::Update(m_window, m_deltaClock.restart());
+	}
+}
 
-		if (m_paused)
+void Game::sUserInput()
+{
+	sf::Event event;
+	while (m_window.pollEvent(event))
+	{
+		ImGui::SFML::ProcessEvent(event);
+
+		if (event.type == sf::Event::Closed)
 		{
-
+			quit();
 		}
-		else
+		if (event.type == sf::Event::KeyPressed)
 		{
-			// increase current frame
-			m_currentFrame++;
+			if (event.key.code == sf::Keyboard::X)
+			{
+				std::cout << "Screenshot saved to " << "test.png" << std::endl;
+				sf::Texture texture;
+				texture.create(m_window.getSize().x, m_window.getSize().y);
+				texture.update(m_window);
+				if (texture.copyToImage().saveToFile("test.png"))
+				{
+					std::cout << "Screenshot saved to " << "test.png" << std::endl;
+				}
+			}
+		}
+
+		if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased)
+		{
+			// if no action associated with this key, do nothing
+			if (getCurrentScene()->getActionMap().find(event.key.code) == getCurrentScene()->getActionMap().end()) continue;
+
+			// get start or end action if it was key press or release
+				const std::string actionType = (event.type == sf::Event::KeyPressed) ? "START" : "END";
+
+			// get action and send to scene
+			getCurrentScene()->doAction(Action(getCurrentScene()->getActionMap().at(event.key.code), actionType));
 		}
 	}
+}
+
+void Game::changeScene(const std::string& sceneName, std::shared_ptr<T> scene)
+{
+
 }
 
 void Game::setPaused(bool paused)

@@ -3,6 +3,17 @@
 #include "Components.h"
 #include <memory>
 #include <string>
+#include <tuple>
+
+using ComponentTuple = std::tuple<
+	CTransform,
+	CShape,	
+	CCollision,
+	CInput,
+	CAnimation,
+	CGravity,
+	CBoundingBox
+	>;
 
 class Entity
 {
