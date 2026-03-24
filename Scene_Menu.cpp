@@ -43,25 +43,23 @@ void Scene_Menu::doAction(const Action& a)
 {
 	if (a.getType() == "START")
 	{
-		m_game->changeScene(std::make_shared<Scene_Play>(*m_game, m_levelPaths[m_menuIndex]));
-		return;
-	}
-	else if (a.getType() == "UP")
-	{
-		m_menuIndex--;
-		if (m_menuIndex < 0) m_menuIndex = m_menuStrings.size() - 1;
-	}
-	else if (a.getType() == "DOWN")
-	{
-		m_selectedMenuIndex = (m_selectedMenuIndex + 1) % m_menuStrings.size();
-	}
-	else if (a.getName() == "PLAY")
-	{
-		m_game->changeScene(std::make_shared<Scene_Play>(*m_game, m_levelPaths[m_menuIndex]));
-	}
-	else if (a.getName() == "QUIT")
-	{
-		onEnd();
+		if (a.getType() == "UP")
+		{
+			if ( m_selectedMenuIndex > 0) { m_selectedMenuIndex--; }
+			else { m_selectedMenuIndex = m_menuStrings.size() - 1; }
+		}
+		else if (a.getType() == "DOWN")
+		{
+			m_selectedMenuIndex = (m_selectedMenuIndex + 1) % m_menuStrings.size();
+		}
+		else if (a.getName() == "PLAY")
+		{
+			m_game->changeScene(std::make_shared<Scene_Play>(m_game, m_levelPaths[m_selectedMenuIndex]));
+		}
+		else if (a.getName() == "QUIT")
+		{
+			onEnd();
+		}
 	}
 }
 

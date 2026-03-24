@@ -23,18 +23,43 @@ class Entity
 	size_t m_id = 0;
 	std::string m_tag = "default";
 
+	ComponentTuple m_components;
+
 	// constructor and destructor
 	Entity(const size_t id, const std::string& tag);
 
 public:
 
-	//component pointers
-	std::shared_ptr<CTransform> cTransform;
-	std::shared_ptr<CShape> cShape;
-	std::shared_ptr<CCollision> cCollision;
-	std::shared_ptr<CInput> cInput;
-	std::shared_ptr<CScore> cScore;
-	std::shared_ptr<CLifespan> cLifespan;
+	void destroy();
+	size_t id();
+	bool isActive();
+	const std::string& tag();
+
+	template<typename T> bool hasComponent() const
+	{
+		return getComponent<T>().has;
+	}
+
+	template<typename T, typename... TArgs>
+	T& addComponent(TArgs&&... mArgs)
+	{
+		auto& component = getComponent<T>();
+		component = T(std::forward<TArgs>(mArgs)...);
+		component.has = true;
+		return component;
+	}
+
+	template<typename T>
+	T& getComponent()
+	{
+		return std::get<T>(m_components);
+	}
+
+	template<typename T>
+	const T& getComponent() const
+	{
+		return std::get<T>(m_components);
+	}
 
 	// private member access functions
 	bool isActive() const;

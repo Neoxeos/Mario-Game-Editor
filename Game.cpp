@@ -86,9 +86,26 @@ void Game::sUserInput()
 	}
 }
 
+template<typename T>
 void Game::changeScene(const std::string& sceneName, std::shared_ptr<T> scene)
 {
+	if (scene)
+	{
+		m_scenes[sceneName] = scene;
+	}
+	else
+	{
+		if (m_scenes.find(sceneName) == m_scenes.end())
+		{
+			std::cerr << "Scene " << sceneName << " not found!" << std::endl;
+			return;
+		}
+	}
 
+	if (endCurrentScene)
+	{
+		m_scenes.erase(m_scenes.find(m_currentScene));
+	}
 }
 
 void Game::setPaused(bool paused)
