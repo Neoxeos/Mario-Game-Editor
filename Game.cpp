@@ -108,9 +108,18 @@ void Game::changeScene(const std::string& sceneName, std::shared_ptr<T> scene)
 	}
 }
 
-void Game::setPaused(bool paused)
+void Game::update()
 {
-	m_paused = true;
+	sUserInput();
+
+	for (size_t i = 0; i < m_simulationSpeed; i++)
+	{
+		getCurrentScene()->update();
+		m_window.clear();
+		getCurrentScene()->sRender();
+		ImGui::SFML::Render(m_window);
+		m_window.display();
+	}
 }
 
 

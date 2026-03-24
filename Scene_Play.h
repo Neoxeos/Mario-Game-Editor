@@ -40,5 +40,5 @@ protected:
 	void spawnPlayer();
 
 	Scene_Play() = default;
-	Scene_Play(Game& game, const std::string& levelPath);
+	Scene_Play(Game* game, const std::string& levelPath);
 };

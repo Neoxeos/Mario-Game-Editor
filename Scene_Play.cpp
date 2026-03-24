@@ -1,6 +1,6 @@
 #include "Scene_Play.h"
 
-Scene_Play::Scene_Play(Game& game, const std::string& levelPath)
+Scene_Play::Scene_Play(Game * game, const std::string& levelPath)
 	: Scene(game)
 	, m_levelPath(levelPath)
 {

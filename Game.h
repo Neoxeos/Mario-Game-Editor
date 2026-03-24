@@ -16,7 +16,7 @@ class Game
 {
 	std::map<std::string, std::shared_ptr<Scene>> m_scenes; // map of all scenes
 	std::string m_scene;
-	Assets m_assets;
+	Assets m_assets = Assets::getInstance();
 	sf::RenderWindow m_window; // the window we will draw to
 	EntityManager m_entities; // vector of all entities
 	size_t m_simulationSpeed = 1; // how many times to update the game logic per frame
@@ -34,8 +34,8 @@ public:
 	void quit();
 	template<typename T> void changeScene(const std::string& sceneName, std::shared_ptr<T> scene);
 	std::shared_ptr<Scene> getCurrentScene();
-	Assets& getAssets();
-	sf::Window& getWindow();
+	Assets& getAssets() { return m_assets;}
+	sf::Window& getWindow() { return m_window;}
 	void sUserInput();
 	bool isRunning() const;
 };
