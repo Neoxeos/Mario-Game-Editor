@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Components.h"
-#include <memory>
+
 #include <string>
 #include <tuple>
+
+class EntityManager;
 
 using ComponentTuple = std::tuple<
 	CTransform,
@@ -31,9 +33,9 @@ class Entity
 public:
 
 	void destroy();
-	size_t id();
-	bool isActive();
-	const std::string& tag();
+	size_t id() const;
+	bool isActive() const;
+	const std::string& tag() const;
 
 	template<typename T> bool hasComponent() const
 	{
@@ -61,9 +63,10 @@ public:
 		return std::get<T>(m_components);
 	}
 
-	// private member access functions
-	bool isActive() const;
-	const std::string& tag() const;
-	const size_t id() const;
-	void destroy();
+	template<typename T>
+	void removeComponent()
+	{
+		getComponent<T>() = T();
+	}
+
 };

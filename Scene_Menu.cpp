@@ -6,7 +6,7 @@
 #include "Components.h"
 
 
-Scene_Menu::Scene_Menu(Game& game)
+Scene_Menu::Scene_Menu(Game* game)
 	: Scene(game)
 {
 	init();
