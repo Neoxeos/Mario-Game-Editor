@@ -2,7 +2,6 @@
 
 #include "Animation.h"
 #include "Vec2f.h"
-#include "Assets.h"
 
 class Component
 {

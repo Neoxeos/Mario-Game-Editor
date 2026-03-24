@@ -1,7 +1,9 @@
 #pragma once
+
 #include "Assets.h"
 #include <string>
 #include <SFML/Graphics.hpp>
+
 
 class Animation
 {

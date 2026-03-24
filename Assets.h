@@ -5,8 +5,8 @@
 #include <cassert>
 #include <iostream>
 #include <fstream>
-#include "Components.h"
-#include "Animation.h"
+
+class Animation;
 
 class Assets
 {
