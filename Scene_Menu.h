@@ -11,6 +11,7 @@
 
 class Scene_Menu : public Scene
 {
+
 protected:
 
 	std::string m_title;
@@ -22,7 +23,7 @@ protected:
 	void init();
 	void update();
 	void onEnd();
-	void sDoAction(const Action& a);
+	void doAction(const Action& a);
 
 public:
 	Scene_Menu() = default;

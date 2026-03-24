@@ -11,6 +11,7 @@ typedef std::map<int, std::string> ActionMap;
 
 class Scene
 {
+protected:
 	Game* m_game;
 	EntityManager	m_entityManager;
 	size_t m_currentFrame = 0;

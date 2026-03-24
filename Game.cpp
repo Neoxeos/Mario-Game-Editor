@@ -32,7 +32,7 @@ std::shared_ptr<Scene> Game::getCurrentScene()
 
 bool Game::isRunning() const
 {
-	return m_running & m_window.isOpen();
+	return m_running && m_window.isOpen();
 }
 
 void Game::run()
@@ -87,7 +87,7 @@ void Game::sUserInput()
 }
 
 template<typename T>
-void Game::changeScene(const std::string& sceneName, std::shared_ptr<T> scene)
+void Game::changeScene(const std::string& sceneName, std::shared_ptr<T> scene, bool endCurrentScene)
 {
 	if (scene)
 	{

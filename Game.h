@@ -32,10 +32,10 @@ public:
 	void update();
 	void run();
 	void quit();
-	template<typename T> void changeScene(const std::string& sceneName, std::shared_ptr<T> scene);
+	template<typename T> void changeScene(const std::string& sceneName, std::shared_ptr<T> scene, bool endCurrentScene = false);
 	std::shared_ptr<Scene> getCurrentScene();
 	Assets& getAssets() { return m_assets;}
-	sf::Window& getWindow() { return m_window;}
+	sf::RenderWindow& getWindow() { return m_window;}
 	void sUserInput();
 	bool isRunning() const;
 };

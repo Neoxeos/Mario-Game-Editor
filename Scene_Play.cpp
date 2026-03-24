@@ -9,11 +9,11 @@ Scene_Play::Scene_Play(Game * game, const std::string& levelPath)
 
 void Scene_Play::init(const std::string& levelPath)
 {
-	registerAction(sf::Keyboard::Scancode::P, "PAUSE");
-	registerAction(sf::Keyboard::Scancode::Escape, "QUIT");
-	registerAction(sf::Keyboard::Scancode::T, "TOGGLE_TEXTURE");
-	registerAction(sf::Keyboard::Scancode::C, "TOGGLE_COLLISION");
-	registerAction(sf::Keyboard::Scancode::G, "TOGGLE_GRID");
+	registerAction(sf::Keyboard::P, "PAUSE");
+	registerAction(sf::Keyboard::Escape, "QUIT");
+	registerAction(sf::Keyboard::T, "TOGGLE_TEXTURE");
+	registerAction(sf::Keyboard::C, "TOGGLE_COLLISION");
+	registerAction(sf::Keyboard::G, "TOGGLE_GRID");
 
 	// TODO
 
@@ -92,13 +92,12 @@ void Scene_Play::sRender()
 	// TODO
 }
 
-void Scene_Play::drawLine(const Vec2f& p1, const Vec2f& p2)
+void Scene::drawLine(const Vec2f& p1, const Vec2f& p2)
 {
 	sf::Vertex line[] =
 	{
-		{p1, sf::Color::White},
-		{p2, sf::Color::White}
+		sf::Vertex(sf::Vector2f(p1.x, p1.y)),
+		sf::Vertex(sf::Vector2f(p2.x, p2.y))
 	};
-
-	m_game.window().draw(line, 2, sf::Lines);
+	m_game->getWindow().draw(line, 2, sf::Lines);
 }

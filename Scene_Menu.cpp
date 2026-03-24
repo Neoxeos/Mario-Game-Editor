@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Action.cpp"
 #include "Components.h"
+#include <SFML/Graphics/View.hpp>
 
 
 Scene_Menu::Scene_Menu(Game* game)
@@ -54,7 +55,7 @@ void Scene_Menu::doAction(const Action& a)
 		}
 		else if (a.getName() == "PLAY")
 		{
-			m_game->changeScene(std::make_shared<Scene_Play>(m_game, m_levelPaths[m_selectedMenuIndex]));
+			m_game->changeScene("PLAY", std::make_shared<Scene_Play>(m_game, m_levelPaths[m_selectedMenuIndex]));
 		}
 		else if (a.getName() == "QUIT")
 		{
@@ -65,7 +66,7 @@ void Scene_Menu::doAction(const Action& a)
 
 void Scene_Menu::sRender()
 {
-	m_game.getWindow().setView(m_game->getWindow().getDefaultView());
+	m_game->getWindow().setView(m_game->getWindow().getDefaultView());
 	m_game->getWindow().clear(sf::Color(100, 100, 255));
 
 	m_menuText.setCharacterSize(48);
@@ -75,7 +76,7 @@ void Scene_Menu::sRender()
 	m_game->getWindow().draw(m_menuText);
 
 	// menu options
-	for (size_t i = 0; i < m_menuStrings.szie(); i++)
+	for (size_t i = 0; i < m_menuStrings.size(); i++)
 	{
 		m_menuText.setString(m_menuStrings[i]);
 		m_menuText.setFillColor(i == m_selectedMenuIndex ? sf::Color::Red : sf::Color::Black);
