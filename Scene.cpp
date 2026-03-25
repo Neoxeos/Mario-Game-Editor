@@ -11,11 +11,6 @@ Scene::Scene(Game* game)
 {
 }
 
-void Scene::setPaused(bool paused)
-{
-	m_paused = paused;
-}
-
 size_t Scene::width() const
 {
 	return m_game->getWindow().getSize().x;

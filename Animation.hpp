@@ -28,8 +28,16 @@ public:
 		const sf::Texture& t = Assets::getInstance().getTexture(textureName);
 		m_textureRect = sf::IntRect(0, 0, 0, 0); // default to empty rect
 	}
-	void update();
-	bool hasEnded() const;
+	void update()
+	{
+		m_currentFrame++;
+		if (m_speed == 0) return; // if speed is 0, we never switch frames
+		m_currentFrame = (m_currentFrame + 1) % m_framecount;
+	}
+	bool hasEnded() const
+	{
+		return m_currentFrame == m_framecount - 1;
+	}
 	const std::string& getName() const { return m_name; }
 	const sf::IntRect& getRect() const { return m_textureRect; }
 };

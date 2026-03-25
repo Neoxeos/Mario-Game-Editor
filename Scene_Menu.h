@@ -23,13 +23,11 @@ protected:
 	void init();
 	void update();
 	void onEnd();
-	void doAction(const Action& a);
 
 public:
 	Scene_Menu() = default;
 	Scene_Menu(Game* game = nullptr);
 
+	void doAction(const Action& a);
 	void sRender();
-	void update();
-	void init() {}
 };

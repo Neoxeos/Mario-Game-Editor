@@ -1,6 +1,5 @@
 #pragma once
-#include "Action.h"
-#include "Game.h"
+
 #include "Scene.h"
 #include "EntityManager.h"
 
@@ -39,6 +38,8 @@ protected:
 	void sAnimation();
 	void spawnPlayer();
 
+public:
 	Scene_Play() = default;
-	Scene_Play(Game* game, const std::string& levelPath);
+	Scene_Play(Game* game) : Scene(game) {}
+	Scene_Play(Game* game,const std::string& levelPath);
 };

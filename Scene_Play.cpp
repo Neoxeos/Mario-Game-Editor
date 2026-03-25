@@ -1,6 +1,9 @@
 #include "Scene_Play.h"
+#include "Scene_Menu.h"
+#include "Game.h"
 
-Scene_Play::Scene_Play(Game * game, const std::string& levelPath)
+
+Scene_Play::Scene_Play(Game * game,const std::string& levelPath)
 	: Scene(game)
 	, m_levelPath(levelPath)
 {
@@ -92,7 +95,7 @@ void Scene_Play::sRender()
 	// TODO
 }
 
-void Scene::drawLine(const Vec2f& p1, const Vec2f& p2)
+void Scene_Play::drawLine(const Vec2f& p1, const Vec2f& p2)
 {
 	sf::Vertex line[] =
 	{

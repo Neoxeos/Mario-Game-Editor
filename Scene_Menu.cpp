@@ -1,8 +1,8 @@
 #include "Scene_Menu.h"
 #include "Scene_Play.h"
-#include "Assets.cpp"
+#include "Assets.h"
 #include "Game.h"
-#include "Action.cpp"
+#include "Action.hpp"
 #include "Components.h"
 #include <SFML/Graphics/View.hpp>
 
@@ -55,7 +55,7 @@ void Scene_Menu::doAction(const Action& a)
 		}
 		else if (a.getName() == "PLAY")
 		{
-			m_game->changeScene("PLAY", std::make_shared<Scene_Play>(m_game, m_levelPaths[m_selectedMenuIndex]));
+			m_game->changeScene<Scene_Play>("play", std::make_shared<Scene_Play>(m_game, m_levelPaths[m_selectedMenuIndex]));
 		}
 		else if (a.getName() == "QUIT")
 		{
@@ -88,4 +88,9 @@ void Scene_Menu::sRender()
 	m_menuText.setCharacterSize(24);
 	m_menuText.setFillColor(sf::Color::Black);
 	m_menuText.setString("Use W/S to navigate, D to select");
+}
+
+void Scene_Menu::onEnd()
+{
+	m_hasEnded = true;
 }

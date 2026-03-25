@@ -15,6 +15,7 @@ struct BulletConfig { int SR, CR, FR, FG, FB, OR, OG, OB, OT, V, L; float S; };
 class Game
 {
 	std::map<std::string, std::shared_ptr<Scene>> m_scenes; // map of all scenes
+	std::string m_currentScene; // the current scene we are in
 	std::string m_scene;
 	Assets m_assets = Assets::getInstance();
 	sf::RenderWindow m_window; // the window we will draw to
@@ -33,7 +34,7 @@ public:
 	void run();
 	void quit();
 	template<typename T> void changeScene(const std::string& sceneName, std::shared_ptr<T> scene, bool endCurrentScene = false);
-	std::shared_ptr<Scene> getCurrentScene();
+	std::shared_ptr<Scene> getCurrentScene() { return m_scenes.at(m_currentScene); }
 	Assets& getAssets() { return m_assets;}
 	sf::RenderWindow& getWindow() { return m_window;}
 	void sUserInput();

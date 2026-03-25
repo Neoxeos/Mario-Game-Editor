@@ -1,4 +1,6 @@
+
 #include "Assets.h"
+#include "Animation.hpp"
 #include <cassert>
 
 Assets& Assets::getInstance()

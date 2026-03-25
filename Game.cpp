@@ -21,14 +21,14 @@ void Game::init(const std::string& path)
 	m_window.create(sf::VideoMode(1280, 768), "Game");
 	m_window.setFramerateLimit(60);
 
+	m_scenes["menu"] = std::make_shared<Scene_Menu>(this);
+	m_scenes["play"] = std::make_shared<Scene_Play>(this, "level1");
+
+	changeScene<Scene_Play>("play", std::make_shared<Scene_Play>(this, "level1"));
 	changeScene<Scene_Menu>("menu", std::make_shared<Scene_Menu>(this));
 	ImGui::SFML::Init(m_window);
 }
 
-std::shared_ptr<Scene> Game::getCurrentScene()
-{
-	return m_scenes.at(m_scene);
-}
 
 bool Game::isRunning() const
 {
@@ -122,5 +122,11 @@ void Game::update()
 	}
 }
 
+void Game::quit()
+{
+	m_running = false;
+	ImGui::SFML::Shutdown();
+	m_window.close();
+}
 
 
