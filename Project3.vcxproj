@@ -174,6 +174,65 @@
     <ClInclude Include="Scene_Play.h" />
     <ClInclude Include="Vec2f.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets.txt" />
+    <Text Include="levels\level.txt" />
+    <Text Include="levels\level1.txt" />
+    <Text Include="levels\level2.txt" />
+    <Text Include="levels\level3.txt" />
+    <Text Include="levels\level_custom.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\mario\air16.png" />
+    <Image Include="images\mario\air64.png" />
+    <Image Include="images\mario\block.png" />
+    <Image Include="images\mario\brick.png" />
+    <Image Include="images\mario\bush.png" />
+    <Image Include="images\mario\bushbig.png" />
+    <Image Include="images\mario\bushsmall.png" />
+    <Image Include="images\mario\cloudbig.png" />
+    <Image Include="images\mario\cloudsmall.png" />
+    <Image Include="images\mario\coin.png" />
+    <Image Include="images\mario\coinpulse.png" />
+    <Image Include="images\mario\flag.png" />
+    <Image Include="images\mario\flagpole.png" />
+    <Image Include="images\mario\flagtop.png" />
+    <Image Include="images\mario\goombawalk.png" />
+    <Image Include="images\mario\ground.png" />
+    <Image Include="images\mario\pipesmall.png" />
+    <Image Include="images\mario\pipetall.png" />
+    <Image Include="images\mario\qfade.png" />
+    <Image Include="images\mario\question.png" />
+    <Image Include="images\mario\question2.png" />
+    <Image Include="images\mario\run16.png" />
+    <Image Include="images\mario\run64.png" />
+    <Image Include="images\mario\stand16.png" />
+    <Image Include="images\mario\stand64.png" />
+    <Image Include="images\megaman\air128.png" />
+    <Image Include="images\megaman\air64.png" />
+    <Image Include="images\megaman\air96.png" />
+    <Image Include="images\megaman\buster.png" />
+    <Image Include="images\megaman\run.png" />
+    <Image Include="images\megaman\run128.png" />
+    <Image Include="images\megaman\run64.png" />
+    <Image Include="images\megaman\run96.png" />
+    <Image Include="images\megaman\stand128.png" />
+    <Image Include="images\megaman\stand64.png" />
+    <Image Include="images\megaman\stand96.png" />
+    <Image Include="images\misc\coinspin.png" />
+    <Image Include="images\misc\explosion128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="fonts\arial.ttf" />
+    <Font Include="fonts\mario.ttf" />
+    <Font Include="fonts\megaman.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sounds\coin.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\main_theme.ogg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

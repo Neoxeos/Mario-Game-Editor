@@ -16,6 +16,24 @@
     <Filter Include="bin">
       <UniqueIdentifier>{d1b4c4e8-d2cf-4d56-8661-0be6f945dab4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="bin\images">
+      <UniqueIdentifier>{179814c0-37e5-4533-9b87-29b82783aaf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bin\fonts">
+      <UniqueIdentifier>{08811424-c8d6-43cd-8a65-bfbe2b2998bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bin\sounds">
+      <UniqueIdentifier>{f51bd659-d734-4bd2-9d3c-4c28d661b7b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bin\images\mario">
+      <UniqueIdentifier>{999d0d38-ef30-4840-bb99-f83f84c446ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bin\images\megaman">
+      <UniqueIdentifier>{2a27a614-b33a-42b6-97bf-eee712d44406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bin\images\misc">
+      <UniqueIdentifier>{8e66c4b8-6ec4-44da-b2d9-019a19221b90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -128,5 +146,162 @@
     <ClInclude Include="Physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets.txt">
+      <Filter>bin</Filter>
+    </Text>
+    <Text Include="levels\level.txt">
+      <Filter>bin</Filter>
+    </Text>
+    <Text Include="levels\level_custom.txt">
+      <Filter>bin</Filter>
+    </Text>
+    <Text Include="levels\level1.txt">
+      <Filter>bin</Filter>
+    </Text>
+    <Text Include="levels\level2.txt">
+      <Filter>bin</Filter>
+    </Text>
+    <Text Include="levels\level3.txt">
+      <Filter>bin</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\mario\air16.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\air64.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\block.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\brick.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\bush.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\bushbig.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\bushsmall.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\cloudbig.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\cloudsmall.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\coin.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\coinpulse.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\flag.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\flagpole.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\flagtop.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\goombawalk.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\ground.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\pipesmall.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\pipetall.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\qfade.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\question.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\question2.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\run16.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\run64.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\stand16.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\mario\stand64.png">
+      <Filter>bin\images\mario</Filter>
+    </Image>
+    <Image Include="images\megaman\air64.png">
+      <Filter>bin\images\megaman</Filter>
+    </Image>
+    <Image Include="images\megaman\air96.png">
+      <Filter>bin\images\megaman</Filter>
+    </Image>
+    <Image Include="images\megaman\air128.png">
+      <Filter>bin\images\megaman</Filter>
+    </Image>
+    <Image Include="images\megaman\buster.png">
+      <Filter>bin\images\megaman</Filter>
+    </Image>
+    <Image Include="images\megaman\run.png">
+      <Filter>bin\images\megaman</Filter>
+    </Image>
+    <Image Include="images\megaman\run64.png">
+      <Filter>bin\images\megaman</Filter>
+    </Image>
+    <Image Include="images\megaman\run96.png">
+      <Filter>bin\images\megaman</Filter>
+    </Image>
+    <Image Include="images\megaman\run128.png">
+      <Filter>bin\images\megaman</Filter>
+    </Image>
+    <Image Include="images\megaman\stand64.png">
+      <Filter>bin\images\megaman</Filter>
+    </Image>
+    <Image Include="images\megaman\stand96.png">
+      <Filter>bin\images\megaman</Filter>
+    </Image>
+    <Image Include="images\megaman\stand128.png">
+      <Filter>bin\images\megaman</Filter>
+    </Image>
+    <Image Include="images\misc\coinspin.png">
+      <Filter>bin\images\misc</Filter>
+    </Image>
+    <Image Include="images\misc\explosion128.png">
+      <Filter>bin\images\misc</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="fonts\arial.ttf">
+      <Filter>bin\fonts</Filter>
+    </Font>
+    <Font Include="fonts\mario.ttf">
+      <Filter>bin\fonts</Filter>
+    </Font>
+    <Font Include="fonts\megaman.ttf">
+      <Filter>bin\fonts</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sounds\coin.wav">
+      <Filter>bin\sounds</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\main_theme.ogg">
+      <Filter>bin\sounds</Filter>
+    </None>
   </ItemGroup>
 </Project>
