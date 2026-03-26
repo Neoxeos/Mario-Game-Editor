@@ -21,8 +21,8 @@ void Game::init(const std::string& path)
 	m_window.create(sf::VideoMode(1280, 768), "Game");
 	m_window.setFramerateLimit(60);
 
-	m_scenes["menu"] = std::make_shared<Scene_Menu>(this);
-	m_scenes["play"] = std::make_shared<Scene_Play>(this, "level1");
+	//m_scenes["menu"] = std::make_shared<Scene_Menu>(this);
+	//m_scenes["play"] = std::make_shared<Scene_Play>(this, "level1");
 
 	changeScene<Scene_Play>("play", std::make_shared<Scene_Play>(this, "level1"));
 	changeScene<Scene_Menu>("menu", std::make_shared<Scene_Menu>(this));
@@ -40,10 +40,15 @@ void Game::run()
 {
 	while (isRunning())
 	{
-		update();
 
 		// required update call to  imgui
 		ImGui::SFML::Update(m_window, m_deltaClock.restart());
+
+		ImGui::Begin("Mario");
+		ImGui::Text("Change Settings Here");
+		ImGui::End();
+		update();
+
 	}
 }
 
@@ -52,7 +57,7 @@ void Game::sUserInput()
 	sf::Event event;
 	while (m_window.pollEvent(event))
 	{
-		ImGui::SFML::ProcessEvent(event);
+		ImGui::SFML::ProcessEvent(getWindow(),event);
 
 		if (event.type == sf::Event::Closed)
 		{
@@ -128,6 +133,7 @@ void Game::update()
 	sUserInput();
 	getCurrentScene()->simulate(m_simulationSpeed);
 	getCurrentScene()->sRender();
+	ImGui::SFML::Render(m_window);
 	m_window.display();
 }
 
