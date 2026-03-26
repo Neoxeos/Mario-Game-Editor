@@ -36,6 +36,14 @@ const ActionMap& Scene::getActionMap() const
 	return m_actionMap;
 }
 
+void Scene::doAction(const Action& action)
+{
+	// ignore null actions
+	if (action.getName() == "NONE") { return; }
+
+	sDoAction(action);
+}
+
 void Scene::registerAction(int inputKey, const std::string& actionName)
 {
 	m_actionMap[inputKey] = actionName;

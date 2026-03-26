@@ -18,6 +18,7 @@ void Scene_Menu::init()
 	registerAction(sf::Keyboard::W, "UP");
 	registerAction(sf::Keyboard::S, "DOWN");
 	registerAction(sf::Keyboard::D, "PLAY");
+	registerAction(sf::Keyboard::U, "UPDATE");
 	registerAction(sf::Keyboard::Escape, "QUIT");
 
 	m_title = "Mega Mario";
@@ -47,16 +48,16 @@ void Scene_Menu::onEnd()
 }
 
 
-void Scene_Menu::doAction(const Action& a)
+void Scene_Menu::sDoAction(const Action& a)
 {
 	if (a.getType() == "START")
 	{
-		if (a.getType() == "UP")
+		if (a.getName() == "UP")
 		{
 			if ( m_selectedMenuIndex > 0) { m_selectedMenuIndex--; }
 			else { m_selectedMenuIndex = m_menuStrings.size() - 1; }
 		}
-		else if (a.getType() == "DOWN")
+		else if (a.getName() == "DOWN")
 		{
 			m_selectedMenuIndex = (m_selectedMenuIndex + 1) % m_menuStrings.size();
 		}

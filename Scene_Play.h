@@ -26,12 +26,14 @@ protected:
 	void loadLevel(const std::string& filename);
 	void update();
 	void onEnd();
+
 	Vec2f gridToMidPixel(float gridX, float gridY, std::shared_ptr<Entity> entity);
+
 	void spawnBullet(std::shared_ptr<Entity> entity);
 	void sMovement();
 	void sLifespan();
 	void sCollision();
-	void doAction(const Action& action);
+	void sDoAction(const Action& action);
 	void sGUI();
 	void sRender();
 	void drawLine(const Vec2f& p1, const Vec2f& p2);

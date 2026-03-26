@@ -70,7 +70,7 @@ void Scene_Play::sCollision()
 	// TODO
 }
 
-void Scene_Play::doAction(const Action& action)
+void Scene_Play::sDoAction(const Action& action)
 {
 	// TODO
 }

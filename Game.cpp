@@ -63,6 +63,8 @@ void Game::sUserInput()
 		{
 			quit();
 		}
+
+		// screenshot
 		if (event.type == sf::Event::KeyPressed)
 		{
 			if (event.key.code == sf::Keyboard::X)
@@ -78,13 +80,14 @@ void Game::sUserInput()
 			}
 		}
 
+		// normal controls
 		if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased)
 		{
 			// if no action associated with this key, do nothing
-			if (getCurrentScene()->getActionMap().find(event.key.code) == getCurrentScene()->getActionMap().end()) continue;
+			if (getCurrentScene()->getActionMap().find(event.key.code) == getCurrentScene()->getActionMap().end()) { std::cout << "nope";  continue; }
 
 			// get start or end action if it was key press or release
-				const std::string actionType = (event.type == sf::Event::KeyPressed) ? "START" : "END";
+			const std::string actionType = (event.type == sf::Event::KeyPressed) ? "START" : "END";
 
 			// get action and send to scene
 			getCurrentScene()->doAction(Action(getCurrentScene()->getActionMap().at(event.key.code), actionType));
