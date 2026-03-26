@@ -33,7 +33,8 @@ public:
 	void update();
 	void run();
 	void quit();
-	template<typename T> void changeScene(const std::string& sceneName, std::shared_ptr<T> scene, bool endCurrentScene = false);
+	//template<typename T> void changeScene(const std::string& sceneName, std::shared_ptr<T> scene, bool endCurrentScene = false);
+	void changeScene(const std::string& sceneName, std::shared_ptr<Scene> scene, bool endCurrentScene = false);
 	std::shared_ptr<Scene> getCurrentScene() { return m_scenes.at(m_currentScene); }
 	Assets& getAssets() { return m_assets;}
 	sf::RenderWindow& getWindow() { return m_window;}

@@ -63,7 +63,8 @@ void Scene_Menu::sDoAction(const Action& a)
 		}
 		else if (a.getName() == "PLAY")
 		{
-			m_game->changeScene<Scene_Play>("play", std::make_shared<Scene_Play>(m_game, m_levelPaths[m_selectedMenuIndex]));
+			std::cout << "hgere";
+			m_game->changeScene("PLAY", std::make_shared<Scene_Play>(m_game, m_levelPaths[m_selectedMenuIndex]));
 		}
 		else if (a.getName() == "UPDATE")
 		{

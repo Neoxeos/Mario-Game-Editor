@@ -24,8 +24,8 @@ void Game::init(const std::string& path)
 	//m_scenes["menu"] = std::make_shared<Scene_Menu>(this);
 	//m_scenes["play"] = std::make_shared<Scene_Play>(this, "level1");
 
-	changeScene<Scene_Play>("play", std::make_shared<Scene_Play>(this, "level1"));
-	changeScene<Scene_Menu>("menu", std::make_shared<Scene_Menu>(this));
+	//changeScene<Scene_Play>("PLAY", std::make_shared<Scene_Play>(this, "level1")); keep this for template
+	changeScene("MENU", std::make_shared<Scene_Menu>(this));
 
 	ImGui::SFML::Init(m_window);
 }
@@ -95,13 +95,12 @@ void Game::sUserInput()
 	}
 }
 
-template<typename T>
-void Game::changeScene(const std::string& sceneName, std::shared_ptr<T> scene, bool endCurrentScene)
+//template<typename T>
+void Game::changeScene(const std::string& sceneName, std::shared_ptr<Scene> scene, bool endCurrentScene)
 {
 	if (scene)
 	{
 		m_scenes[sceneName] = scene;
-		m_currentScene = sceneName;
 	}
 	else
 	{
@@ -116,6 +115,7 @@ void Game::changeScene(const std::string& sceneName, std::shared_ptr<T> scene, b
 	{
 		m_scenes.erase(m_scenes.find(m_currentScene));
 	}
+	m_currentScene = sceneName;
 }
 
 void Game::update()
