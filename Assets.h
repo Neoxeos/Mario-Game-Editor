@@ -34,4 +34,5 @@ public:
 
 	const std::map<std::string, sf::Texture>& getTextures() const { return m_textureMap;}
 	const std::map<std::string, Animation>& getAnimations() const { return m_animationMap;}
+	const std::map<std::string, sf::Font>& getFonts() const { return m_fontMap;}
 };

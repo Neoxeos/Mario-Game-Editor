@@ -13,7 +13,7 @@ void Assets::addTexture(const std::string& textureName, const std::string& path,
 {
 	getInstance().m_textureMap[textureName] = sf::Texture();
 	
-	if (!m_textureMap[textureName].loadFromFile(path))
+	if (!getInstance().m_textureMap[textureName].loadFromFile(path))
 	{
 		std::cerr << "Failed to load texture: " << path << std::endl;
 		getInstance().m_textureMap.erase(textureName);
@@ -26,7 +26,6 @@ void Assets::addTexture(const std::string& textureName, const std::string& path,
 }
 
 const sf::Texture& Assets::getTexture(const std::string& textureName) const {
-	std::cout << "size: " << getInstance().m_textureMap.size() << std::endl;
 	assert(getInstance().m_textureMap.find(textureName) != getInstance().m_textureMap.end());
 	return getInstance().m_textureMap.at(textureName);
 }
@@ -45,7 +44,7 @@ const Animation& Assets::getAnimation(const std::string& animationName) const {
 void Assets::addFont(const std::string& fontName, const std::string& path)
 {
 	getInstance().m_fontMap[fontName] = sf::Font();
-	if (!m_fontMap[fontName].loadFromFile(path))
+	if (!getInstance().m_fontMap[fontName].loadFromFile(path))
 	{
 		std::cerr << "Failed to load font: " << path << std::endl;
 		getInstance().m_fontMap.erase(fontName);

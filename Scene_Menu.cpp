@@ -91,7 +91,7 @@ void Scene_Menu::sRender()
 	{
 		m_menuText.setString(m_menuStrings[i]);
 		m_menuText.setFillColor(i == m_selectedMenuIndex ? sf::Color::White : sf::Color::Black);
-		m_menuText.setPosition(sf::Vector2f(10, 100 + i * 72));
+		m_menuText.setPosition(sf::Vector2f(10, 110 + i * 72));
 		m_game->getWindow().draw(m_menuText);
 	}
 
