@@ -27,16 +27,10 @@ public:
 
 	void loadFromFile(const std::string& path);
 
-	const sf::Texture& getTexture(const std::string& textureName) const {
-		assert(m_textureMap.find(textureName) != m_textureMap.end());
-		return m_textureMap.at(textureName); }
-	const Animation& getAnimation(const std::string& animationName) const {
-		//assert(m_animationMap.find(animationName) != m_animationMap.end());
-		return m_animationMap.at(animationName); }
-	const sf::Font& getFont(const std::string& fontName) const {
-		assert(m_fontMap.find(fontName) != m_fontMap.end());
-		return m_fontMap.at(fontName); }
-	//const sf::Sound& getSound(const std::string& soundName) const { return m_sounds.at(soundName); }
+	const sf::Texture& getTexture(const std::string& textureName) const;
+	const Animation& getAnimation(const std::string& animationName) const;
+	const sf::Font& getFont(const std::string& fontName) const;
+	//const sf::Sound& getSound(const std::string& soundName) const;
 
 	const std::map<std::string, sf::Texture>& getTextures() const { return m_textureMap;}
 	const std::map<std::string, Animation>& getAnimations() const { return m_animationMap;}

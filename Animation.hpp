@@ -26,7 +26,7 @@ public:
 		, m_speed(speed)
 	{
 		const sf::Texture& t = Assets::getInstance().getTexture(textureName);
-		m_textureRect = sf::IntRect(0, 0, 0, 0); // default to empty rect
+		//m_textureRect.size = {int(t.getSize().x / framecount), int(t.getSize().y)};
 	}
 	void update()
 	{

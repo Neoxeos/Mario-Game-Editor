@@ -175,7 +175,7 @@
     <ClInclude Include="Vec2f.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Assets.txt" />
+    <Text Include="assets.txt" />
     <Text Include="levels\level.txt" />
     <Text Include="levels\level1.txt" />
     <Text Include="levels\level2.txt" />

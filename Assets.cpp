@@ -11,38 +11,57 @@ Assets& Assets::getInstance()
 
 void Assets::addTexture(const std::string& textureName, const std::string& path, bool smooth)
 {
-	m_textureMap[textureName] = sf::Texture();
+	getInstance().m_textureMap[textureName] = sf::Texture();
 	
 	if (!m_textureMap[textureName].loadFromFile(path))
 	{
 		std::cerr << "Failed to load texture: " << path << std::endl;
-		m_textureMap.erase(textureName);
+		getInstance().m_textureMap.erase(textureName);
 	} 
 	else
 	{
-		m_textureMap[textureName].setSmooth(smooth);
+		getInstance().m_textureMap[textureName].setSmooth(smooth);
 		std::cout << "Loaded texture: " << path << std::endl;
 	}
 }
 
+const sf::Texture& Assets::getTexture(const std::string& textureName) const {
+	std::cout << "size: " << getInstance().m_textureMap.size() << std::endl;
+	assert(getInstance().m_textureMap.find(textureName) != getInstance().m_textureMap.end());
+	return getInstance().m_textureMap.at(textureName);
+}
+
+
 void Assets::addAnimation(const std::string& animationName, const std::string& textureName, size_t frameCount, size_t speed)
 {
-	m_animationMap[animationName] = Animation(animationName, textureName, frameCount, speed);
+	getInstance().m_animationMap[animationName] = Animation(animationName, textureName, frameCount, speed);
+}
+
+const Animation& Assets::getAnimation(const std::string& animationName) const {
+	//assert(getInstance().m_animationMap.find(animationName) != getInstance().m_animationMap.end());
+	return getInstance().m_animationMap.at(animationName);
 }
 
 void Assets::addFont(const std::string& fontName, const std::string& path)
 {
-	m_fontMap[fontName] = sf::Font();
+	getInstance().m_fontMap[fontName] = sf::Font();
 	if (!m_fontMap[fontName].loadFromFile(path))
 	{
 		std::cerr << "Failed to load font: " << path << std::endl;
-		m_fontMap.erase(fontName);
+		getInstance().m_fontMap.erase(fontName);
 	} 
 	else
 	{
 		std::cout << "Loaded font: " << path << std::endl;
 	}
 }
+
+const sf::Font& Assets::getFont(const std::string& fontName) const {
+	assert(getInstance().m_fontMap.find(fontName) != getInstance().m_fontMap.end());
+	return getInstance().m_fontMap.at(fontName);
+}
+
+//const sf::Sound& getSound(const std::string& soundName) const { return m_sounds.at(soundName); }
 
 void Assets::loadFromFile(const std::string& path)
 {

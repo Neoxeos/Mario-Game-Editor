@@ -148,7 +148,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Assets.txt">
+    <Text Include="assets.txt">
       <Filter>bin</Filter>
     </Text>
     <Text Include="levels\level.txt">
