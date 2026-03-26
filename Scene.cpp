@@ -41,6 +41,14 @@ void Scene::registerAction(int inputKey, const std::string& actionName)
 	m_actionMap[inputKey] = actionName;
 }
 
+void Scene::simulate(const size_t frames)
+{
+	for (size_t i = 0; i < frames; i++)
+	{
+		update();
+	}
+}
+
 void Scene::drawLine(const Vec2f& p1, const Vec2f& p2)
 {
 	sf::Vertex line[] =

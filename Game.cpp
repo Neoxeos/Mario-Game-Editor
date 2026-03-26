@@ -26,6 +26,7 @@ void Game::init(const std::string& path)
 
 	changeScene<Scene_Play>("play", std::make_shared<Scene_Play>(this, "level1"));
 	changeScene<Scene_Menu>("menu", std::make_shared<Scene_Menu>(this));
+
 	ImGui::SFML::Init(m_window);
 }
 
@@ -92,6 +93,7 @@ void Game::changeScene(const std::string& sceneName, std::shared_ptr<T> scene, b
 	if (scene)
 	{
 		m_scenes[sceneName] = scene;
+		m_currentScene = sceneName;
 	}
 	else
 	{
@@ -110,16 +112,23 @@ void Game::changeScene(const std::string& sceneName, std::shared_ptr<T> scene, b
 
 void Game::update()
 {
-	sUserInput();
+	//for (size_t i = 0; i < m_simulationSpeed; i++)
+	//{
+	//	getCurrentScene()->update();
+	//	m_window.clear();
+	//	getCurrentScene()->sRender();
+	//	ImGui::SFML::Render(m_window);
+	//	m_window.display();
+	//}
 
-	for (size_t i = 0; i < m_simulationSpeed; i++)
-	{
-		getCurrentScene()->update();
-		m_window.clear();
-		getCurrentScene()->sRender();
-		ImGui::SFML::Render(m_window);
-		m_window.display();
-	}
+	if (!isRunning()) { return; }
+
+	if (m_scenes.empty()) { return; }
+
+	sUserInput();
+	getCurrentScene()->simulate(m_simulationSpeed);
+	getCurrentScene()->sRender();
+	m_window.display();
 }
 
 void Game::quit()

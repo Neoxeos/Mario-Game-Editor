@@ -38,7 +38,7 @@ void Assets::addAnimation(const std::string& animationName, const std::string& t
 }
 
 const Animation& Assets::getAnimation(const std::string& animationName) const {
-	//assert(getInstance().m_animationMap.find(animationName) != getInstance().m_animationMap.end());
+	assert(getInstance().m_animationMap.find(animationName) != getInstance().m_animationMap.end());
 	return getInstance().m_animationMap.at(animationName);
 }
 
