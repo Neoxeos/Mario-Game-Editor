@@ -7,15 +7,25 @@
 
 class EntityManager;
 
-using ComponentTuple = std::tuple<
+//using ComponentTuple = std::tuple<
+//	CTransform,
+//	CShape,	
+//	CCollision,
+//	CInput,
+//	CAnimation,
+//	CGravity,
+//	CBoundingBox
+//	>;
+
+typedef std::tuple<
 	CTransform,
-	CShape,	
-	CCollision,
+	CLifespan,
 	CInput,
+	CBoundingBox,
 	CAnimation,
 	CGravity,
-	CBoundingBox
-	>;
+	CState
+> ComponentTuple;
 
 class Entity
 {

@@ -7,7 +7,7 @@ class Scene_Play : public Scene
 {
 	struct PlayerConfig
 	{
-		float X, Y, CX, CY, SPEED, MAXSEPEED, JUMP, GRAVITY;
+		float X, Y, CX, CY, SPEED, MAXSPEED, JUMP, GRAVITY;
 		std::string WEAPON;
 	};
 
@@ -19,6 +19,8 @@ protected:
 	bool m_drawCollisions = false;
 	bool m_drawGrid = false;
 	const Vec2f m_gridSize = { 64, 64 };
+	sf::Text m_gridText;
+	bool m_drawCollision = false;
 	//EntityManager m_entityManager;
 	//Game m_game;
 
@@ -43,5 +45,5 @@ protected:
 public:
 	Scene_Play() = default;
 	Scene_Play(Game* game) : Scene(game) {}
-	Scene_Play(Game* game,const std::string& levelPath);
+	Scene_Play(Game* game = nullptr, const std::string& levelPath = "");
 };
