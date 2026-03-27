@@ -1,5 +1,5 @@
 #include "Vec2f.h"
-#include <math.h>
+#include <cmath>
 
 
 Vec2f::Vec2f()
@@ -72,10 +72,28 @@ float Vec2f::dist(const Vec2f& rhs) const
 	return sqrtf(diff.x * diff.x + diff.y * diff.y);
 }
 
+float Vec2f::length() const
+{
+	return std::sqrt(x * x + y * y);
+}
+
 Vec2f Vec2f::normalize()
 {
 	// first get length
 	float length = sqrtf(x * x + y * y);
 	// then normalize
 	return Vec2f(x / length, y / length);
+}
+
+void Vec2f::rotate(float theta)
+{
+	float rad = theta * (float)3.14159265 / 180.0f;
+	float cosine = cos(rad);
+	float sine = sin(rad);
+
+	float xnew = x * cosine - y * sine;
+	float ynew = x * sine + y * cosine;
+
+	x = xnew;
+	y = ynew;
 }

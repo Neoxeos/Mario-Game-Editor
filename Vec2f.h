@@ -23,5 +23,7 @@ public:
 	Vec2f operator /= (const Vec2f& rhs) const;
 
 	float dist(const Vec2f& rhs) const;
+	float length() const;
 	Vec2f normalize();
+	void rotate(float theta);
 };

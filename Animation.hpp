@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Assets.h"
+#include "Vec2f.h"
 #include <string>
 #include <SFML/Graphics.hpp>
 
@@ -21,9 +22,9 @@ public:
 		: Animation(name, textureName, 1, 0) 
 	{
 		const sf::Texture t = Assets::getInstance().getTexture(textureName);
-		m_size = Vec2f(t.getSize().x, t.getSize().y);
+		m_size = Vec2f((float)t.getSize().x, (float)t.getSize().y);
 		m_sprite.setOrigin(m_size.x / 2.0f, m_size.y / 2.0f);
-		m_sprite.setTextureRect(sf::IntRect(std::floor(m_currentFrame) * m_size.x, 0, m_size.x, m_size.y));
+		m_sprite.setTextureRect(sf::IntRect((int)(std::floor(m_currentFrame) * m_size.x), 0, (int)m_size.x, (int)m_size.y));
 	}
 
 	Animation(const std::string& name, const std::string& textureName, size_t framecount, size_t speed)
@@ -36,15 +37,15 @@ public:
 		const sf::Texture& t = Assets::getInstance().getTexture(textureName);
 		m_size = Vec2f((float)t.getSize().x / framecount, (float)t.getSize().y);
 		m_sprite.setOrigin(m_size.x / 2.0f, m_size.y / 2.0f);
-		m_sprite.setTextureRect(sf::IntRect(std::floor(m_currentFrame) * m_size.x, 0, m_size.x, m_size.y));
+		m_sprite.setTextureRect(sf::IntRect((int)(std::floor(m_currentFrame) * m_size.x), 0, (int)m_size.x, (int)m_size.y));
 	}
 
 	void update()
 	{
 		m_currentFrame++;
 		if (m_speed == 0) return; // if speed is 0, we never switch frames
-		int frame = (m_currentFrame / m_speed) % m_framecount; // safe code would check for 'divide by zero' error
-		sf::IntRect rect = sf::IntRect(frame * (m_size.x), 0, m_size.x, m_size.y);
+		int frame = ((int)m_currentFrame / (int)m_speed) % (int)m_framecount; // safe code would check for 'divide by zero' error
+		sf::IntRect rect = sf::IntRect((int)(std::floor(m_currentFrame) * m_size.x), 0, (int)m_size.x, (int)m_size.y);
 
 		m_sprite.setTextureRect(rect);
 

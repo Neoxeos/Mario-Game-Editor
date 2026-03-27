@@ -7,7 +7,7 @@
 class Component
 {
 public:
-	bool exists = false;
+	bool has = false;
 };
 
 class CTransform : public Component

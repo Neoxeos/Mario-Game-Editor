@@ -46,7 +46,7 @@ void Scene_Play::loadLevel(const std::string& filename)
 
 	while (f >> str) {
 		if (str == "Tile") {
-			std::string type; size_t x, y;
+			std::string type; float x, y;
 			f >> type >> x >> y;
 			auto e = m_entityManager.addEntity("tile");
 			e->addComponent<CTransform>(Vec2f(x, y));
@@ -58,7 +58,7 @@ void Scene_Play::loadLevel(const std::string& filename)
 			//e->addComponent<CBoundingBox>(m_game->getAssets().getAnimation(type).getSize());
 		}
 		else if (str == "Dec") {
-			std::string type; size_t x, y;
+			std::string type; float x, y;
 			f >> type >> x >> y;
 			auto e = m_entityManager.addEntity("dec");
 			e->addComponent<CTransform>(Vec2f(x, y));
