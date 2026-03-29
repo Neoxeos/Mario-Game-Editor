@@ -34,6 +34,7 @@ public:
 		m_size = Vec2f((float)t.getSize().x / framecount, (float)t.getSize().y);
 		m_sprite.setOrigin(m_size.x / 2.0f, m_size.y / 2.0f);
 		m_sprite.setTextureRect(sf::IntRect((int)(std::floor(m_currentFrame) * m_size.x), 0, (int)m_size.x, (int)m_size.y));
+		m_sprite.setTexture(t);
 	}
 
 	void update()

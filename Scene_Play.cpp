@@ -129,12 +129,16 @@ void Scene_Play::update()
 
 void Scene_Play::sMovement()
 {
-	auto ppos = m_player->getComponent<CTransform>().pos;
-	auto box = m_entityManager.getEntities("box")[0];
+	Vec2f& ppos = m_player->getComponent<CTransform>().pos;
+	std::shared_ptr<Entity> box = m_entityManager.getEntities("box")[0];
 	box->getComponent<CTransform>().pos = Vec2f(ppos.x, ppos.y - 1);
 
 
 	Vec2f playerVelocity = { 0.0f, m_player->getComponent<CTransform>().velocity.y };
+	if (m_player->getComponent<CState>().state == "AIR") {
+		m_player->getComponent<CInput>().canJump = false;
+		ppos.y += playerVelocity.y;
+	}
 
 	if (m_player->getComponent<CInput>().up && m_player->getComponent<CInput>().canJump) {
 		playerVelocity.y = m_playerConfig.JUMP;
@@ -146,10 +150,12 @@ void Scene_Play::sMovement()
 	}
 	if (m_player->getComponent<CInput>().left) {
 		playerVelocity.x = -m_playerConfig.SPEED;
+		ppos.x += playerVelocity.x;
 		m_player->getComponent<CTransform>().scale.x = -1.0;
 	}
 	if (m_player->getComponent<CInput>().right) {
 		playerVelocity.x = m_playerConfig.SPEED;
+		ppos.x += playerVelocity.x;
 		m_player->getComponent<CTransform>().scale.x = 1.0;
 	}
 
@@ -238,14 +244,6 @@ void Scene_Play::sAnimation()
 	auto animation = m_player->getComponent<CAnimation>().animation.getName();
 	if (state == "AIR") {
 		m_player->getComponent<CAnimation>().animation = m_game->getAssets().getAnimation("Air");
-		std::cout << m_game->getAssets().getAnimation("Air").getSize().y << std::endl;
-		if ( m_player->getComponent<CAnimation>().animation.getSprite().getTexture() ) {
-			std::cout << "texture not null" << std::endl;
-		}
-		else
-		{
-			std::cout << "texture null" << std::endl;
-		}
 	}
 	else if (state == "GROUND" && m_player->getComponent<CTransform>().velocity.x == 0) {
 		std::cout << m_player->getComponent<CAnimation>().animation.getName() << std::endl;
