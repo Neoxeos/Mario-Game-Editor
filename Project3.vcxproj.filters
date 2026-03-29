@@ -34,6 +34,9 @@
     <Filter Include="bin\images\misc">
       <UniqueIdentifier>{8e66c4b8-6ec4-44da-b2d9-019a19221b90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="bin\levels">
+      <UniqueIdentifier>{8bf9a235-1324-41c7-a250-e5a973db6eab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -152,19 +155,19 @@
       <Filter>bin</Filter>
     </Text>
     <Text Include="levels\level.txt">
-      <Filter>bin</Filter>
+      <Filter>bin\levels</Filter>
     </Text>
     <Text Include="levels\level_custom.txt">
-      <Filter>bin</Filter>
+      <Filter>bin\levels</Filter>
     </Text>
     <Text Include="levels\level1.txt">
-      <Filter>bin</Filter>
+      <Filter>bin\levels</Filter>
     </Text>
     <Text Include="levels\level2.txt">
-      <Filter>bin</Filter>
+      <Filter>bin\levels</Filter>
     </Text>
     <Text Include="levels\level3.txt">
-      <Filter>bin</Filter>
+      <Filter>bin\levels</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

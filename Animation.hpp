@@ -12,29 +12,25 @@ class Animation
 	size_t m_currentFrame = 0; // current frame
 	size_t m_speed = 0; // how many updates before we switch to the next frame
 	std::string m_name = "none";
-	std::string m_textureName = "none";
 	sf::Sprite m_sprite;
-	Vec2f m_size;
+	Vec2f m_size = {1, 1};
 public:
 	Animation() = default;
 
-	Animation(const std::string& name, const std::string& textureName)
-		: Animation(name, textureName, 1, 0) 
+	Animation(const std::string& name, const sf::Texture& t)
+		: Animation(name, t, 1, 0) 
 	{
-		const sf::Texture t = Assets::getInstance().getTexture(textureName);
 		m_size = Vec2f((float)t.getSize().x, (float)t.getSize().y);
 		m_sprite.setOrigin(m_size.x / 2.0f, m_size.y / 2.0f);
 		m_sprite.setTextureRect(sf::IntRect((int)(std::floor(m_currentFrame) * m_size.x), 0, (int)m_size.x, (int)m_size.y));
 	}
 
-	Animation(const std::string& name, const std::string& textureName, size_t framecount, size_t speed)
+	Animation(const std::string& name, const sf::Texture& t, size_t framecount, size_t speed)
 		: m_name(name)
 		, m_currentFrame(0)
-		, m_textureName(textureName)
 		, m_framecount(framecount)
 		, m_speed(speed)
 	{
-		const sf::Texture& t = Assets::getInstance().getTexture(textureName);
 		m_size = Vec2f((float)t.getSize().x / framecount, (float)t.getSize().y);
 		m_sprite.setOrigin(m_size.x / 2.0f, m_size.y / 2.0f);
 		m_sprite.setTextureRect(sf::IntRect((int)(std::floor(m_currentFrame) * m_size.x), 0, (int)m_size.x, (int)m_size.y));

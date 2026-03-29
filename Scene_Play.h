@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Scene.h"
-#include "EntityManager.h"
+#include <map>
+#include <memory>
 
 class Scene_Play : public Scene
 {
@@ -16,13 +17,10 @@ protected:
 	std::string m_levelPath;
 	PlayerConfig m_playerConfig;
 	bool m_drawTextures = true;
-	bool m_drawCollisions = false;
 	bool m_drawGrid = false;
 	const Vec2f m_gridSize = { 64, 64 };
 	sf::Text m_gridText;
-	bool m_drawCollision = false;
-	//EntityManager m_entityManager;
-	//Game m_game;
+	bool m_drawCollision = true;
 
 	void init(const std::string& levelPath);
 	void loadLevel(const std::string& filename);

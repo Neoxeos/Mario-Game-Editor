@@ -43,13 +43,20 @@ Vec2f Scene_Play::gridToMidPixel(float gridX, float gridY, std::shared_ptr<Entit
 
 void Scene_Play::loadLevel(const std::string& filename)
 {
+
 	m_entityManager = EntityManager();
+
 	std::ifstream f(filename);
 	std::string str;
-
-	while (f >> str) {
+	std::cout << filename << std::endl;
+	if (!f.good()) {
+		std::cerr << "Failed to open level file: " << filename << std::endl;
+		return;
+	}
+	while (f.good()) { 
+		f >> str;
 		if (str == "Tile") {
-			std::string type; float x, y;
+			std::string type; size_t x, y;
 			f >> type >> x >> y;
 			auto e = m_entityManager.addEntity("tile");
 			e->addComponent<CTransform>(Vec2f(x, y));
@@ -58,7 +65,7 @@ void Scene_Play::loadLevel(const std::string& filename)
 			e->addComponent<CAnimation>(m_game->getAssets().getAnimation(type), repeat);
 			e->getComponent<CTransform>().prevPos = e->getComponent<CTransform>().pos;
 			// add a bounding box, this will now show up if we press the 'C' Key
-			//e->addComponent<CBoundingBox>(m_game->getAssets().getAnimation(type).getSize());
+			e->addComponent<CBoundingBox>(m_game->getAssets().getAnimation(type).getSize());
 		}
 		else if (str == "Dec") {
 			std::string type; float x, y;
@@ -80,7 +87,6 @@ void Scene_Play::spawnPlayer()
 {
 	// check to see i plyer already exists
 	if (!m_player) { m_player = m_entityManager.addEntity("player");}
-	
 	m_player = m_entityManager.addEntity("player");
 	m_player->addComponent<CAnimation>(m_game->getAssets().getAnimation("Stand"), true);
 	m_player->addComponent<CTransform>(Vec2f(m_playerConfig.X, m_playerConfig.Y));
@@ -94,7 +100,7 @@ void Scene_Play::spawnPlayer()
 	// helps with state management(ground or air)
 	auto e = m_entityManager.addEntity("box");
 	e->addComponent<CTransform>(Vec2f(m_playerConfig.X, m_playerConfig.Y - 1));
-	// e->getComponent<CTransform>().velocity = Vec2(eConfig.SPEED, eConfig.JUMP);
+	//e->getComponent<CTransform>().velocity = Vec2f(eConfig.SPEED, eConfig.JUMP);
 	e->addComponent<CBoundingBox>(Vec2f(m_playerConfig.CX, m_playerConfig.CY));
 }
 
@@ -123,12 +129,69 @@ void Scene_Play::update()
 
 void Scene_Play::sMovement()
 {
-	// TODO
+	auto ppos = m_player->getComponent<CTransform>().pos;
+	auto box = m_entityManager.getEntities("box")[0];
+	box->getComponent<CTransform>().pos = Vec2f(ppos.x, ppos.y - 1);
+
+
+	Vec2f playerVelocity = { 0.0f, m_player->getComponent<CTransform>().velocity.y };
+
+	if (m_player->getComponent<CInput>().up && m_player->getComponent<CInput>().canJump) {
+		playerVelocity.y = m_playerConfig.JUMP;
+		m_player->getComponent<CInput>().canJump = false;
+		m_player->getComponent<CState>().state = "AIR";
+	}
+	if (!m_player->getComponent<CInput>().up && m_player->getComponent<CTransform>().velocity.y > 0) {
+		playerVelocity.y = 0;
+	}
+	if (m_player->getComponent<CInput>().left) {
+		playerVelocity.x = -m_playerConfig.SPEED;
+		m_player->getComponent<CTransform>().scale.x = -1.0;
+	}
+	if (m_player->getComponent<CInput>().right) {
+		playerVelocity.x = m_playerConfig.SPEED;
+		m_player->getComponent<CTransform>().scale.x = 1.0;
+	}
+
+
+
+	playerVelocity.y += m_player->getComponent<CGravity>().gravity;
+	if (m_player->getComponent<CState>().state == "GROUND") {
+		playerVelocity.y = 0;
+	}
+
+	if (abs(playerVelocity.y) > m_playerConfig.MAXSPEED) {
+		playerVelocity.y = m_playerConfig.MAXSPEED * ((playerVelocity.y) / abs(playerVelocity.y));
+	}
+	if (abs(playerVelocity.x) > m_playerConfig.MAXSPEED) {
+		playerVelocity.x = m_playerConfig.MAXSPEED * ((playerVelocity.x) / abs(playerVelocity.x));
+	}
+
+
+	m_player->getComponent<CTransform>().prevPos = m_player->getComponent<CTransform>().pos; // save previous position
+
+	m_player->getComponent<CTransform>().velocity = playerVelocity;
+	m_player->getComponent<CTransform>().pos += playerVelocity;
+
+
+
+
+
+
+	for (auto e : m_entityManager.getEntities("bullet")) {
+		e->getComponent<CTransform>().pos.x += e->getComponent<CTransform>().velocity.x;
+	}
 }
 
 void Scene_Play::sLifespan()
 {
-	// TODO
+	for (auto e : m_entityManager.getEntities()) {
+		if (e->hasComponent<CLifespan>()) {
+			if (e->getComponent<CLifespan>().frameCreated + e->getComponent<CLifespan>().lifespan <= m_currentFrame) {
+				e->destroy();
+			}
+		}
+	}
 }
 
 void Scene_Play::sCollision()
@@ -138,17 +201,80 @@ void Scene_Play::sCollision()
 
 void Scene_Play::sDoAction(const Action& action)
 {
-	// TODO
+	if (action.getType() == "START")
+	{
+		if (action.getName() == "TOGGLE_TEXTURE") { m_drawTextures = !m_drawTextures; }
+		else if (action.getName() == "TOGGLE_COLLISION") { m_drawCollision = !m_drawCollision; }
+		else if (action.getName() == "TOGGLE_GRID") { m_drawGrid = !m_drawGrid; }
+		else if (action.getName() == "PAUSE") { setPaused(!m_paused); }
+		else if (action.getName() == "QUIT") { onEnd(); }
+		else if (action.getName() == "JUMP") {
+			m_player->getComponent<CInput>().up = true;
+		}
+		else if (action.getName() == "MOVE_LEFT") { m_player->getComponent<CInput>().left = true; }
+		else if (action.getName() == "MOVE_RIGHT") { m_player->getComponent<CInput>().right = true; }
+		else if (action.getName() == "SHOOT" && m_player->getComponent<CInput>().canShoot) {
+			m_player->getComponent<CInput>().shoot = true;
+			m_player->getComponent<CInput>().canShoot = false;
+			spawnBullet(m_player);
+		}
+	}
+	else if (action.getType() == "END") {
+		if (action.getName() == "JUMP") {
+			m_player->getComponent<CInput>().up = false;
+		}
+		else if (action.getName() == "MOVE_LEFT") { m_player->getComponent<CInput>().left = false; }
+		else if (action.getName() == "MOVE_RIGHT") { m_player->getComponent<CInput>().right = false; }
+		else if (action.getName() == "SHOOT") {
+			m_player->getComponent<CInput>().shoot = false;
+			m_player->getComponent<CInput>().canShoot = true;
+		}
+	}
 }
 
 void Scene_Play::sAnimation()
 {
-	// TODO
+	auto state = m_player->getComponent<CState>().state;
+	auto animation = m_player->getComponent<CAnimation>().animation.getName();
+	if (state == "AIR") {
+		m_player->getComponent<CAnimation>().animation = m_game->getAssets().getAnimation("Air");
+		std::cout << m_game->getAssets().getAnimation("Air").getSize().y << std::endl;
+		if ( m_player->getComponent<CAnimation>().animation.getSprite().getTexture() ) {
+			std::cout << "texture not null" << std::endl;
+		}
+		else
+		{
+			std::cout << "texture null" << std::endl;
+		}
+	}
+	else if (state == "GROUND" && m_player->getComponent<CTransform>().velocity.x == 0) {
+		std::cout << m_player->getComponent<CAnimation>().animation.getName() << std::endl;
+		// only set the animation if it should change as it overwrites the previous animation 
+		// (and currentAnimationFrame values start from 0 again)
+		// it does not matter for others(the two above) cause they have 1 frame only
+	}
+	else if (state == "GROUND" && animation != "Run") {
+		m_player->getComponent<CAnimation>().animation = m_game->getAssets().getAnimation("Run");
+	}
+
+
+	// for each entity with an animation, call entity->getComponent<CAnimation>().animation.update()
+	// if the animation is not repeated, and it has ended, destroy the entity
+	for (auto e : m_entityManager.getEntities()) {
+		if (e->hasComponent<CAnimation>()) {
+			e->getComponent<CAnimation>().animation.update();
+			if (!e->getComponent<CAnimation>().repeat && e->getComponent<CAnimation>().animation.hasEnded()) {
+				e->destroy();
+			}
+		}
+	}
 }
 
 void Scene_Play::onEnd()
 {
-	// TODO
+	m_hasEnded = true;
+	m_game->changeScene("MENU", std::make_shared<Scene_Menu>(m_game), false);
+	//m_music.stop();
 }
 
 void Scene_Play::sGUI()

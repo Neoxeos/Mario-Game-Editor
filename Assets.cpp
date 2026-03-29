@@ -20,6 +20,7 @@ void Assets::addTexture(const std::string& textureName, const std::string& path,
 	} 
 	else
 	{
+		std::cout << getInstance().m_textureMap[textureName].getSize().x << " " << getInstance().m_textureMap[textureName].getSize().y << std::endl;
 		getInstance().m_textureMap[textureName].setSmooth(smooth);
 		std::cout << "Loaded texture: " << path << std::endl;
 	}
@@ -33,7 +34,7 @@ const sf::Texture& Assets::getTexture(const std::string& textureName) const {
 
 void Assets::addAnimation(const std::string& animationName, const std::string& textureName, size_t frameCount, size_t speed)
 {
-	getInstance().m_animationMap[animationName] = Animation(animationName, textureName, frameCount, speed);
+	getInstance().m_animationMap[animationName] = Animation(animationName,getTexture(textureName), frameCount, speed);
 }
 
 const Animation& Assets::getAnimation(const std::string& animationName) const {

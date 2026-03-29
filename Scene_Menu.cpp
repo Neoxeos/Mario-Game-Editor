@@ -26,9 +26,9 @@ void Scene_Menu::init()
 	m_menuStrings.push_back("Level 2");
 	m_menuStrings.push_back("Level 3");
 
-	m_levelPaths.push_back("level1.txt");
-	m_levelPaths.push_back("level2.txt");
-	m_levelPaths.push_back("level3.txt");
+	m_levelPaths.push_back("levels/level1.txt");
+	m_levelPaths.push_back("levels/level2.txt");
+	m_levelPaths.push_back("levels/level3.txt");
 
 	m_menuText.setFont(m_game->getAssets().getFont("Megaman"));
 	m_menuText.setCharacterSize(64);
@@ -63,7 +63,6 @@ void Scene_Menu::sDoAction(const Action& a)
 		}
 		else if (a.getName() == "PLAY")
 		{
-			std::cout << "hgere";
 			m_game->changeScene("PLAY", std::make_shared<Scene_Play>(m_game, m_levelPaths[m_selectedMenuIndex]));
 		}
 		else if (a.getName() == "UPDATE")

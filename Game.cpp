@@ -84,7 +84,7 @@ void Game::sUserInput()
 		if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased)
 		{
 			// if no action associated with this key, do nothing
-			if (getCurrentScene()->getActionMap().find(event.key.code) == getCurrentScene()->getActionMap().end()) { std::cout << "nope";  continue; }
+			if (getCurrentScene()->getActionMap().find(event.key.code) == getCurrentScene()->getActionMap().end()) { continue; }
 
 			// get start or end action if it was key press or release
 			const std::string actionType = (event.type == sf::Event::KeyPressed) ? "START" : "END";
