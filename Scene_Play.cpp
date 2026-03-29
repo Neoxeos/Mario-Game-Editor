@@ -135,11 +135,14 @@ void Scene_Play::sMovement()
 
 
 	Vec2f playerVelocity = { 0.0f, m_player->getComponent<CTransform>().velocity.y };
-	if (m_player->getComponent<CState>().state == "AIR") {
-		m_player->getComponent<CInput>().canJump = false;
-		ppos.y += playerVelocity.y;
-	}
 
+	// falling
+	//if (m_player->getComponent<CState>().state == "AIR") {
+	//	m_player->getComponent<CInput>().canJump = false;
+	//	ppos.y += playerVelocity.y;
+	//}
+
+	// jump
 	if (m_player->getComponent<CInput>().up && m_player->getComponent<CInput>().canJump) {
 		playerVelocity.y = m_playerConfig.JUMP;
 		m_player->getComponent<CInput>().canJump = false;
@@ -148,21 +151,21 @@ void Scene_Play::sMovement()
 	if (!m_player->getComponent<CInput>().up && m_player->getComponent<CTransform>().velocity.y > 0) {
 		playerVelocity.y = 0;
 	}
+	//move left right wheteher on ground or air
 	if (m_player->getComponent<CInput>().left) {
 		playerVelocity.x = -m_playerConfig.SPEED;
-		ppos.x += playerVelocity.x;
 		m_player->getComponent<CTransform>().scale.x = -1.0;
 	}
 	if (m_player->getComponent<CInput>().right) {
 		playerVelocity.x = m_playerConfig.SPEED;
-		ppos.x += playerVelocity.x;
 		m_player->getComponent<CTransform>().scale.x = 1.0;
 	}
 
 
-
+	// on ground
 	playerVelocity.y += m_player->getComponent<CGravity>().gravity;
 	if (m_player->getComponent<CState>().state == "GROUND") {
+		m_player->getComponent<CInput>().canJump = false;
 		playerVelocity.y = 0;
 	}
 
@@ -177,11 +180,8 @@ void Scene_Play::sMovement()
 	m_player->getComponent<CTransform>().prevPos = m_player->getComponent<CTransform>().pos; // save previous position
 
 	m_player->getComponent<CTransform>().velocity = playerVelocity;
-	m_player->getComponent<CTransform>().pos += playerVelocity;
-
-
-
-
+	m_player->getComponent<CTransform>().pos.x += playerVelocity.x;
+	m_player->getComponent<CTransform>().pos.y += playerVelocity.y;
 
 
 	for (auto e : m_entityManager.getEntities("bullet")) {
@@ -258,7 +258,7 @@ void Scene_Play::sAnimation()
 
 	// for each entity with an animation, call entity->getComponent<CAnimation>().animation.update()
 	// if the animation is not repeated, and it has ended, destroy the entity
-	for (auto e : m_entityManager.getEntities()) {
+	for (auto& e : m_entityManager.getEntities()) {
 		if (e->hasComponent<CAnimation>()) {
 			e->getComponent<CAnimation>().animation.update();
 			if (!e->getComponent<CAnimation>().repeat && e->getComponent<CAnimation>().animation.hasEnded()) {
@@ -296,7 +296,7 @@ void Scene_Play::sRender()
 	// draw all Entity textures / animations
 	if (m_drawTextures)
 	{
-		for (auto e : m_entityManager.getEntities())
+		for (auto& e : m_entityManager.getEntities())
 		{
 			auto& transform = e->getComponent<CTransform>();
 			if (e->hasComponent<CAnimation>())
@@ -313,7 +313,7 @@ void Scene_Play::sRender()
 	// draw all entity collision bounding boxes with a rectangle shape
 	if (m_drawCollision)
 	{
-		for (auto e : m_entityManager.getEntities())
+		for (auto& e : m_entityManager.getEntities())
 		{
 			if (e->hasComponent<CBoundingBox>())
 			{

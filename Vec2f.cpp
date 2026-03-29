@@ -9,9 +9,8 @@ Vec2f::Vec2f(float xin, float yin)
 	:x(xin), y(yin)
 {}
 
-Vec2f Vec2f::operator+ (const Vec2f& rhs) const
+Vec2f Vec2f::operator + (const Vec2f& rhs) const
 {
-	//TODO
 	return Vec2f(this->x + rhs.x, this->y + rhs.y);
 }
 
