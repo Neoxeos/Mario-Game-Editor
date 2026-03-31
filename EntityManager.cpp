@@ -39,6 +39,8 @@ void EntityManager::removeDeadEntities(EntityVec& vec)
 			vecCopy.push_back(entity);
 		}
 	}
+
+	vec.clear();
 	vec = vecCopy;
 }
 

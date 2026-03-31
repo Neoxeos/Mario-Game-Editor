@@ -327,20 +327,19 @@ void Scene_Play::sDoAction(const Action& action)
 
 void Scene_Play::sAnimation()
 {
-	auto state = m_player->getComponent<CState>().state;
-	auto animation = m_player->getComponent<CAnimation>().animation.getName();
+	auto& state = m_player->getComponent<CState>().state;
+	auto& animation = m_player->getComponent<CAnimation>().animation;
 	if (state == "AIR") {
 		m_player->getComponent<CAnimation>().animation = m_game->getAssets().getAnimation("Air");
 	}
 	else if (state == "GROUND" && m_player->getComponent<CTransform>().velocity.x == 0) {
-		m_player->getComponent<CAnimation>().animation = m_game->getAssets().getAnimation("Stand");
+		animation = m_game->getAssets().getAnimation("Stand");
 		// only set the animation if it should change as it overwrites the previous animation 
 		// (and currentAnimationFrame values start from 0 again)
 		// it does not matter for others(the two above) cause they have 1 frame only
 	}
 	else if (state == "GROUND" && m_player->getComponent<CTransform>().velocity.x != 0) {
-		m_player->getComponent<CAnimation>().animation = m_game->getAssets().getAnimation("Run");
-		std::cout << "here";
+		animation = m_game->getAssets().getAnimation("Run");
 	}
 
 
