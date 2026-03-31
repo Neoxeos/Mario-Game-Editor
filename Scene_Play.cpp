@@ -200,9 +200,96 @@ void Scene_Play::sLifespan()
 	}
 }
 
+void Scene_Play::explosion(std::shared_ptr<Entity> e) {
+	auto expo = m_entityManager.addEntity("explosion");
+	expo->addComponent<CAnimation>(m_game->getAssets().getAnimation("Explosion"), false);
+	expo->addComponent<CTransform>(e->getComponent<CTransform>().pos);
+
+}
+
+void Scene_Play::spawnCoin(std::shared_ptr<Entity> e) {
+	auto coin = m_entityManager.addEntity("coin");
+	coin->addComponent<CTransform>(Vec2f(e->getComponent<CTransform>().pos.x, e->getComponent<CTransform>().pos.y + 64));
+	coin->addComponent<CAnimation>(m_game->getAssets().getAnimation("Coin"), false);
+}
+
 void Scene_Play::sCollision()
 {
-	// TODO
+	for (auto b : m_entityManager.getEntities("bullet")) {
+		for (auto t : m_entityManager.getEntities("tile")) {
+			auto overlap = Physics::GetOverlap(b, t);
+			if (overlap.x > 0 && overlap.y > 0) {
+				b->destroy();
+				if (t->getComponent<CAnimation>().animation.getName() == "Brick") {
+					explosion(t);
+					t->destroy();
+				}
+			}
+		}
+	}
+
+
+	// Implement player / tile collisions and resolutions
+	// Update the CState component of the player to store whether
+	// it is currently on the ground or in the air. This will be
+	// used by the Animation system
+	for (auto t : m_entityManager.getEntities("tile")) {
+		auto overlap = Physics::GetOverlap(m_player, t);
+		auto ppos = m_player->getComponent<CTransform>().pos;
+		auto tpos = t->getComponent<CTransform>().pos;
+		auto prevOverlap = Physics::GetPreviousOverlap(m_player, t);
+		if (overlap.x > 0 && overlap.y > 0) {
+			if (prevOverlap.y > 0) { // for collisions on the sides
+				if (m_player->getComponent<CTransform>().pos.x > t->getComponent<CTransform>().pos.x) {
+					m_player->getComponent<CTransform>().pos.x += overlap.x;
+				}
+				else {
+					m_player->getComponent<CTransform>().pos.x -= overlap.x;
+				}
+				auto animation = t->getComponent<CAnimation>().animation.getName();
+				if (animation == "Flag" || animation == "Pole" || animation == "PoleTop") {
+					m_player->destroy();
+					spawnPlayer();
+				}
+			}
+			if (prevOverlap.x > 0) { // for vertical collisions
+				if (m_player->getComponent<CTransform>().pos.y > t->getComponent<CTransform>().pos.y) { // falling down
+					m_player->getComponent<CTransform>().pos.y += overlap.y;
+					m_player->getComponent<CState>().state = "GROUND"; // todo : when to switch to air
+				}
+				else { // going  up
+					m_player->getComponent<CTransform>().pos.y -= overlap.y;
+					m_player->getComponent<CTransform>().velocity.y = 0;
+					if (t->getComponent<CAnimation>().animation.getName() == "Brick") {
+						explosion(t);
+						t->destroy();
+					}
+					else if (t->getComponent<CAnimation>().animation.getName() == "Question") {
+						spawnCoin(t);
+						t->getComponent<CAnimation>().animation = m_game->getAssets().getAnimation("Question2");
+					}
+				}
+			}
+		}
+	}
+
+
+
+	// this is a hacky solution to manage player state (ground or air) but i can only think of this for now
+	// maybe later move the line that changes position to sMovement
+	m_player->getComponent<CState>().state = "AIR";
+	for (auto t : m_entityManager.getEntities("tile")) {
+
+		if (m_player) {
+			auto ppos = m_player->getComponent<CTransform>().pos;
+			auto box = m_entityManager.getEntities("box")[0];
+			auto overlap = Physics::GetOverlap(box, t);
+			if (overlap.x > 0 && overlap.y > 0) {
+				m_player->getComponent<CState>().state = "GROUND";
+				m_player->getComponent<CInput>().canJump = true;
+			}
+		}
+	}
 }
 
 void Scene_Play::sDoAction(const Action& action)

@@ -32,6 +32,8 @@ protected:
 	void spawnBullet(std::shared_ptr<Entity> entity);
 	void sMovement();
 	void sLifespan();
+	void explosion(std::shared_ptr<Entity> e);
+	void spawnCoin(std::shared_ptr<Entity> e);
 	void sCollision();
 	void sDoAction(const Action& action);
 	void sGUI();
