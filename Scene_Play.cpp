@@ -151,7 +151,7 @@ void Scene_Play::sMovement()
 	if (!m_player->getComponent<CInput>().up && m_player->getComponent<CTransform>().velocity.y > 0) {
 		playerVelocity.y = 0;
 	}
-	//move left right wheteher on ground or air
+	//move left right whether on ground or air
 	if (m_player->getComponent<CInput>().left) {
 		playerVelocity.x = -m_playerConfig.SPEED;
 		m_player->getComponent<CTransform>().scale.x = -1.0;
@@ -333,13 +333,14 @@ void Scene_Play::sAnimation()
 		m_player->getComponent<CAnimation>().animation = m_game->getAssets().getAnimation("Air");
 	}
 	else if (state == "GROUND" && m_player->getComponent<CTransform>().velocity.x == 0) {
-		std::cout << m_player->getComponent<CAnimation>().animation.getName() << std::endl;
+		m_player->getComponent<CAnimation>().animation = m_game->getAssets().getAnimation("Stand");
 		// only set the animation if it should change as it overwrites the previous animation 
 		// (and currentAnimationFrame values start from 0 again)
 		// it does not matter for others(the two above) cause they have 1 frame only
 	}
-	else if (state == "GROUND" && animation != "Run") {
+	else if (state == "GROUND" && m_player->getComponent<CTransform>().velocity.x != 0) {
 		m_player->getComponent<CAnimation>().animation = m_game->getAssets().getAnimation("Run");
+		std::cout << "here";
 	}
 
 

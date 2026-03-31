@@ -20,10 +20,11 @@ public:
 	Animation(const std::string& name, const sf::Texture& t)
 		: Animation(name, t, 1, 0) 
 	{
-		m_size = Vec2f((float)t.getSize().x, (float)t.getSize().y);
+		m_size = Vec2f(t.getSize().x, t.getSize().y);
 		m_sprite.setOrigin(m_size.x / 2.0f, m_size.y / 2.0f);
-		m_sprite.setTextureRect(sf::IntRect((int)(std::floor(m_currentFrame) * m_size.x), 0, (int)m_size.x, (int)m_size.y));
+		sf::IntRect rect = sf::IntRect((std::floor(m_currentFrame) * m_size.x), 0, m_size.x, m_size.y);
 		m_sprite.setTexture(t);
+		m_sprite.setTextureRect(rect);
 	}
 
 	Animation(const std::string& name, const sf::Texture& t, size_t framecount, size_t speed)
@@ -32,10 +33,11 @@ public:
 		, m_framecount(framecount)
 		, m_speed(speed)
 	{
-		m_size = Vec2f((float)t.getSize().x / framecount, (float)t.getSize().y);
+		m_size = Vec2f(t.getSize().x / framecount, t.getSize().y);
 		m_sprite.setOrigin(m_size.x / 2.0f, m_size.y / 2.0f);
-		m_sprite.setTextureRect(sf::IntRect((int)(std::floor(m_currentFrame) * m_size.x), 0, (int)m_size.x, (int)m_size.y));
+		sf::IntRect rect = sf::IntRect((std::floor(m_currentFrame) * m_size.x), 0, m_size.x, m_size.y);
 		m_sprite.setTexture(t);
+		m_sprite.setTextureRect(rect);
 	}
 
 	void update()
@@ -43,7 +45,7 @@ public:
 		m_currentFrame++;
 		if (m_speed == 0) return; // if speed is 0, we never switch frames
 		int frame = ((int)m_currentFrame / (int)m_speed) % (int)m_framecount; // safe code would check for 'divide by zero' error
-		sf::IntRect rect = sf::IntRect((int)(std::floor(m_currentFrame) * m_size.x), 0, (int)m_size.x, (int)m_size.y);
+		sf::IntRect rect = sf::IntRect((int)(std::floor(m_currentFrame) * m_size.x), 0, (int) m_size.x, (int)m_size.y);
 
 		m_sprite.setTextureRect(rect);
 
