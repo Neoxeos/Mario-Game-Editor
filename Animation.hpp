@@ -45,7 +45,7 @@ public:
 		m_currentFrame++;
 		if (m_speed == 0) return; // if speed is 0, we never switch frames
 		int frame = ((int)m_currentFrame / (int)m_speed) % (int)m_framecount; 
-		sf::IntRect rect = sf::IntRect((int)(std::floor(frame) * m_size.x), 0, (int) m_size.x, (int)m_size.y);
+		sf::IntRect rect = sf::IntRect(frame * m_size.x, 0, m_size.x, (int)m_size.y);
 
 		m_sprite.setTextureRect(rect);
 

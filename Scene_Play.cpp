@@ -87,7 +87,7 @@ void Scene_Play::spawnPlayer()
 {
 	// check to see i plyer already exists
 	if (!m_player) { m_player = m_entityManager.addEntity("player");}
-	m_player = m_entityManager.addEntity("player");
+	else { m_player = m_entityManager.addEntity("player"); }
 	m_player->addComponent<CAnimation>(m_game->getAssets().getAnimation("Stand"), true);
 	m_player->addComponent<CTransform>(Vec2f(m_playerConfig.X, m_playerConfig.Y));
 	m_player->getComponent<CTransform>().prevPos = Vec2f(m_playerConfig.X, m_playerConfig.Y);
@@ -228,12 +228,7 @@ void Scene_Play::sCollision()
 		}
 	}
 
-
-	// Implement player / tile collisions and resolutions
-	// Update the CState component of the player to store whether
-	// it is currently on the ground or in the air. This will be
-	// used by the Animation system
-	for (auto t : m_entityManager.getEntities("tile")) {
+	for (auto& t : m_entityManager.getEntities("tile")) {
 		auto overlap = Physics::GetOverlap(m_player, t);
 		auto ppos = m_player->getComponent<CTransform>().pos;
 		auto tpos = t->getComponent<CTransform>().pos;
@@ -273,10 +268,7 @@ void Scene_Play::sCollision()
 		}
 	}
 
-
-
-	// this is a hacky solution to manage player state (ground or air) but i can only think of this for now
-	// maybe later move the line that changes position to sMovement
+	// manage state (ground or air), this is used for jumping and animation purposes
 	m_player->getComponent<CState>().state = "AIR";
 	for (auto t : m_entityManager.getEntities("tile")) {
 
@@ -328,18 +320,20 @@ void Scene_Play::sDoAction(const Action& action)
 void Scene_Play::sAnimation()
 {
 	auto& state = m_player->getComponent<CState>().state;
+	auto animationN = m_player->getComponent<CAnimation>().animation.getName();
 	auto& animation = m_player->getComponent<CAnimation>().animation;
 	if (state == "AIR") {
 		m_player->getComponent<CAnimation>().animation = m_game->getAssets().getAnimation("Air");
 	}
 	else if (state == "GROUND" && m_player->getComponent<CTransform>().velocity.x == 0) {
 		animation = m_game->getAssets().getAnimation("Stand");
-		// only set the animation if it should change as it overwrites the previous animation 
-		// (and currentAnimationFrame values start from 0 again)
-		// it does not matter for others(the two above) cause they have 1 frame only
 	}
-	else if (state == "GROUND" && m_player->getComponent<CTransform>().velocity.x != 0) {
+	else if (state == "GROUND" && animationN != "Run") {
 		animation = m_game->getAssets().getAnimation("Run");
+	}
+	else if (state == "GROUND" && animationN == "Run")
+	{
+			// do nothing, we will update the run animation in the next step
 	}
 
 
